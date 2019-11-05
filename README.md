@@ -1,0 +1,7 @@
+在使用RabbitMQ之前，我们要先明白它的工作机制
+
+通过vhost将多租户分隔开来，同一rabbitMQ服务不同的vhost之间互不干扰
+
+先创建exchange，确定其类别。然后创建queue，并与exchange进行绑定，就像是订阅了所有到该exchange的消息一样。但并不是所有到达该exchange的消息都会分发到该queue上，而是通过routing key来区分的。一个queue可以绑定多个exchange。
+
+一个queue内的信息只会被消费一次，如果多个consumer都希望获取该消息，应该每个consumer各自都开设一个queue，去订阅消息，然后各自去消费属于自己的queue。
