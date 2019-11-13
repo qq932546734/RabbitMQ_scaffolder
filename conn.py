@@ -45,4 +45,7 @@ def create():
     channel.queue_delete("queue_name")
     channel.exchange_delete("exchange_name")
 
+    # 开启消费队列
+    channel.start_consuming()
+
     channel.close()
