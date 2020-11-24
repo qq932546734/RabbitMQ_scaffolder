@@ -21,3 +21,8 @@
 ### 消费message
 
 推送消息的客户端不用知道queue的存在，它们只需要知道Exhange和routing_key。因此，queue的名字之类的信息消费不用与推送端同步，自己管理即可。
+
+### 注意
+
+一般情况下，消息都是发送到exchange，然后根据routing key，下发到绑定到当前exchange的queue。但有一种特殊的情况：如果不指定exchange，即`exchange=""`的情况下，该消息会直接下发到以routing key为名称的queue中。注意，空字符对应的exchange其实是rabbitmq默认的exchange，该exchange不支持手动将queue与其绑定。
+其大概流程如下：首先创建一个queue，不用绑定到任何exchange。然后通过`basic_publish`将消息发送到该queue上，exchange为空，routing key即为queue的名称。
